@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order</title>
+
+<style>
+
+:root{
+--primary-brown:#542e15;
+--accent-gold:#d4a373;
+--bg-beige:#e2c19d;
+}
+
+body{
+margin:0;
+font-family:Arial;
+background-color: var(--bg-beige);
+background-image:
+url('images/baskwetball.png'),
+url('images/3.png'),
+url('images/3.png'),
+url('images/3.png'),
+radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0.05));
+background-repeat: repeat;
+background-blend-mode: multiply, overlay, overlay, overlay, normal;
+display:flex;
+justify-content:center;
+}
+
+/* NAVBAR */
+
+.bottom-nav{
+position:fixed;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:360px;
+background:#f4efe6;
+border-radius:25px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+padding:12px 0;
+box-shadow:0 6px 20px rgba(0,0,0,0.15);
+z-index:10;
+}
+
+.bottom-nav svg{
+width:24px;
+height:24px;
+}
+
+.bottom-nav span{
+font-size:12px;
+}
+
+.bottom-nav a{
+text-decoration:none;
+color:#6b4a2b;
+font-size:12px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+}
+
+.bottom-nav svg{
+width:22px;
+height:22px;
+}
+
+.bottom-nav a.active{
+color:var(--accent-gold);
+font-weight:bold;
+transform:scale(1.1);
+}
+
+.bottom-nav a.active span{
+font-size:14px;
+}
+
+/* CONTAINER */
+
+.container{
+width:100%;
+max-width:1100px;
+margin:auto;
+padding:100px 20px 40px;
+}
+
+.form-wrapper{
+width:100%;
+max-width:900px;
+margin:auto;
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.order-box{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+margin-bottom:20px;
+}
+
+.product-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:10px 0;
+}
+
+.qty-input{
+width:70px;
+padding:5px;
+text-align:center;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.total{
+font-weight:bold;
+font-size:18px;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
+box-sizing:border-box;
+}
+
+/* BUTTON */
+
+.button-texture{
+position:relative;
+margin-top:15px;
+width:100%;
+padding:12px;
+border:none;
+background:#542e15;
+color:white;
+font-size:16px;
+border-radius:12px;
+cursor:pointer;
+overflow:hidden;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.button-texture span{
+position:relative;
+z-index:1;
+}
+
+/* texture */
+
+.button-texture::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:url('images/5.png'),
+radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0.05));
+background-repeat:repeat,repeat;
+background-size:cover;
+background-blend-mode:multiply;
+opacity:0.15;
+pointer-events:none;
+z-index:0;
+}
+
+/* Ripple */
+
+.ripple{
+position:absolute;
+border-radius:50%;
+transform:scale(0);
+animation:ripple-animation 600ms linear;
+background-color:rgba(255,255,255,0.4);
+}
+
+@keyframes ripple-animation{
+to{
+transform:scale(4);
+opacity:0;
+}
+}
+
+/* SUCCESS */
+
+.success{
+display:none;
+text-align:center;
+background:#d4edda;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+}
+
+/* DESKTOP */
+
+@media (min-width:1200px){
+
+.container{
+max-width:1200px;
+}
+
+.form-wrapper{
+max-width:700px;
+}
+
+.bottom-nav{
+max-width:1200px;
+width:95%;
+height:65px;
+padding:0;
+}
+
+.bottom-nav span{
+font-size:14px;
+}
+
+.bottom-nav svg{
+width:26px;
+height:26px;
+}
+
+
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="bottom-nav">
+
+<a href="index.html">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M3 9L12 3L21 9V21H3Z"></path>
+</svg>
+<span>Home</span>
+</a>
+
+<a href="index.html#categories">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<rect x="3" y="3" width="7" height="7"></rect>
+<rect x="14" y="3" width="7" height="7"></rect>
+<rect x="14" y="14" width="7" height="7"></rect>
+<rect x="3" y="14" width="7" height="7"></rect>
+</svg>
+<span>Category</span>
+</a>
+
+<a href="#" class="active">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 8L12 3L3 8V21H21Z"></path>
+<path d="M3 8L12 13L21 8"></path>
+</svg>
+<span>Orders</span>
+</a>
+
+</div>
+
+<div class="container">
+<div class="form-wrapper">
+
+<h2>Complete Your Order</h2>
+
+<div class="order-box">
+
+<div class="product-row">
+<span>Product:</span>
+<span id="productName"></span>
+</div>
+
+<div class="product-row">
+<span>Price:</span>
+<span id="productPrice"></span>
+</div>
+
+<div class="product-row">
+<span>Quantity:</span>
+<input type="number" id="productQty" class="qty-input" min="1">
+</div>
+
+<div class="product-row total">
+<span>Total:</span>
+<span id="productTotal"></span>
+</div>
+
+</div>
+
+<div class="order-box">
+
+<input type="text" id="customerName" placeholder="Your Name">
+<input type="tel" id="customerPhone" placeholder="Phone Number">
+<input type="text" id="customerAddress" placeholder="Address">
+
+<button id="submitBtn" class="button-texture" onclick="submitOrder()">
+<span id="btnText">Submit Order</span>
+</button>
+
+<div class="success" id="successMsg">
+Order sent successfully
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search)
+
+const name = params.get("name")
+const price = Number(params.get("price"))
+let qty = Number(params.get("qty"))
+
+document.getElementById("productName").textContent = name
+document.getElementById("productPrice").textContent = "EGP " + price
+
+const qtyInput = document.getElementById("productQty")
+const totalBox = document.getElementById("productTotal")
+
+qtyInput.value = qty
+
+function updateTotal(){
+const total = price * qtyInput.value
+totalBox.textContent = "EGP " + total
+}
+
+qtyInput.addEventListener("input",updateTotal)
+updateTotal()
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbzX9tXAbenQcSd85EcMCUIeZcr6n1F7D4uspGSBpEukN77OFG8w6WeKLt4tpCtAi3Dy/exec"
+
+async function submitOrder(){
+
+const btn = document.getElementById("submitBtn")
+const text = document.getElementById("btnText")
+
+btn.disabled = true
+text.innerText = "Sending..."
+
+const orderData = {
+product:name,
+price:price,
+qty:qtyInput.value,
+total:price * qtyInput.value,
+customer:document.getElementById("customerName").value,
+phone:document.getElementById("customerPhone").value,
+address:document.getElementById("customerAddress").value
+}
+
+await fetch(scriptURL,{
+method:"POST",
+body:JSON.stringify(orderData)
+})
+
+text.innerText = "Order Sent ✓"
+document.getElementById("successMsg").style.display="block"
+
+}
+
+/* Ripple Effect */
+
+const button = document.getElementById("submitBtn")
+
+button.addEventListener("click", function (e) {
+
+const circle = document.createElement("span")
+const diameter = Math.max(button.clientWidth, button.clientHeight)
+const radius = diameter / 2
+
+circle.style.width = circle.style.height = diameter + "px"
+circle.style.left = e.clientX - button.offsetLeft - radius + "px"
+circle.style.top = e.clientY - button.offsetTop - radius + "px"
+circle.classList.add("ripple")
+
+const ripple = button.getElementsByClassName("ripple")[0]
+if (ripple) ripple.remove()
+
+button.appendChild(circle)
+
+})
+
+</script>
+
+</body>
+</html>

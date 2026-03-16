@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category | Premium Store</title>
+    <style>
+        :root {
+            --primary-brown: #542e15;
+            --accent-gold: #d4a373;
+            --bg-beige: #e2c19d;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-beige);
+            background-image: 
+                url('images/baskwetball.png'),
+                url('images/3.png'),
+                url('images/3.png'),
+                url('images/3.png'),
+                radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0.05));
+            background-repeat: repeat;
+            background-blend-mode: multiply, overlay, overlay, overlay, normal;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- NAVBAR --- */
+        .bottom-nav{
+position:fixed;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:360px;
+background:#f4efe6;
+border-radius:25px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+padding:12px 0;
+box-shadow:0 6px 20px rgba(0,0,0,0.15);
+z-index:10;
+}
+
+.bottom-nav svg{
+width:24px;
+height:24px;
+}
+
+.bottom-nav span{
+font-size:12px;
+}
+
+        .bottom-nav a {
+            text-decoration: none;
+            color: #6b4a2b;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition-smooth);
+        }
+
+        .bottom-nav svg { width: 22px; height: 22px; }
+
+        .bottom-nav a.active {
+            color: var(--accent-gold);
+            font-weight: bold;
+            transform: scale(1.1);
+        }
+
+        /* --- CONTAINER --- */
+        .mobile-container {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            padding: 100px 20px 40px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        /* --- BANNER --- */
+      .category-banner {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        @media (min-width:700px){ .category-banner{ height:600px; } }
+        @media (min-width:1000px){ .category-banner{ height:600px; } }
+        .category-banner img { width: 100%; height: 100%; object-fit: cover; }
+
+        .main-heading {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 34px;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary-brown);
+        }
+
+        /* --- PRODUCTS GRID --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 700px) {
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .bottom-nav { max-width: 500px; }
+        }
+
+        @media (min-width: 1000px) {
+            .products-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+            .bottom-nav { max-width: 800px; }
+            .img-holder { height: 220px !important; }
+        }
+
+        @media (min-width: 1300px) {
+            .products-grid { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        /* --- CARD STYLE (الذي طلبته) --- */
+        .product-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(84, 46, 21, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(84, 46, 21, 0.1); }
+
+        .img-holder { height: 180px; overflow: hidden; position: relative; }
+        .img-holder img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .product-card:hover .img-holder img { transform: scale(1.08); }
+
+        .wishlist-btn {
+            position: absolute; top: 10px; left: 10px;
+            background: white; border-radius: 50%;
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card-info { 
+            padding: 12px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            text-align: center; /* هذا السطر سيقوم بتوسيط كل النصوص */
+            align-items: center; /* هذا السطر سيضمن توسيط العناصر في المنتصف */
+        }
+
+        .card-info h3 { 
+            font-size: 15px; 
+            margin: 0 0 8px; 
+            color: var(--primary-brown); 
+            width: 100%; /* لضمان التوسيط الكامل */
+        }
+
+        .price { 
+            font-weight: bold; 
+            color: var(--primary-brown); 
+            display: block; /* لجعل السعر يأخذ سطراً منفصلاً ويتوسط */
+            margin-bottom: 5px;
+        }
+
+        /* الزرار الجديد داخل الكارت */
+        .view-btn {
+            background: var(--primary-brown);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .view-btn:hover { background: #3d210f; }
+
+        /* --- SKELETON LOADER --- */
+        .skeleton {
+            background: linear-gradient(90deg, #e2c19d 25%, #eed6bc 50%, #e2c19d 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* --- MODAL --- */
+        .product-modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+
+        .product-modal {
+            background-color: var(--bg-beige);
+            background-image: url('images/baskwetball.png'), url('images/3.png'), url('images/3.png');
+            background-repeat: repeat;
+            background-blend-mode: multiply;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .product-modal img { width: 100%; height: 250px; object-fit: cover; border-radius: 12px; }
+
+        .button-texture {
+            position: relative;
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #542e15;
+            color: white;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+        .button-texture::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url('images/5.png');
+            background-size: cover; opacity: 0.15;
+        }
+@media (min-width:1200px){
+
+.mobile-container{
+max-width:1200px;
+}
+
+.category-banner{
+height:600px;
+}
+
+.products-grid{
+grid-template-columns:repeat(5,1fr);
+gap:25px;
+}
+
+.img-holder{
+height:220px;
+}
+
+.bottom-nav{
+max-width:1200px;
+width:95%;
+height:65px;
+padding:0;
+}
+
+.bottom-nav svg{
+width:26px;
+height:26px;
+}
+
+
+}
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="bottom-nav">
+        <a href="index.html">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9L12 3L21 9V21H3Z" stroke-width="2"></path></svg>
+            <span>Home</span>
+        </a>
+        <a href="index.html#categories" class="active">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" stroke-width="2"></rect><rect x="14" y="3" width="7" height="7" stroke-width="2"></rect><rect x="14" y="14" width="7" height="7" stroke-width="2"></rect><rect x="3" y="14" width="7" height="7" stroke-width="2"></rect></svg>
+            <span id="navCategory">Category</span>
+        </a>
+        <a href="orders.html">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 8L12 3L3 8V21H21Z" stroke-width="2"></path><path d="M3 8L12 13L21 8" stroke-width="2"></path></svg>
+            <span>Orders</span>
+        </a>
+    </div>
+
+    <div class="mobile-container">
+        <div class="category-banner">
+            <img id="categoryBanner" src="">
+        </div>
+
+        <h1 class="main-heading" id="categoryName">Loading...</h1>
+
+        <div class="products-grid" id="productsGrid">
+            <div class="product-card skeleton" style="height: 240px;"></div>
+            <div class="product-card skeleton" style="height: 240px;"></div>
+            <div class="product-card skeleton" style="height: 240px;"></div>
+            <div class="product-card skeleton" style="height: 240px;"></div>
+        </div>
+    </div>
+
+    <div class="product-modal-overlay" id="productModal">
+        <div class="product-modal">
+            <img id="modalImage" src="">
+            <h2 id="modalName" style="margin:15px 0 10px; color: var(--primary-brown);"></h2>
+            <p id="modalPrice" style="font-weight:bold; font-size: 1.1em;"></p>
+            <p id="modalDesc" style="font-size:13px; color:#6b4a2b; margin-bottom:15px;"></p>
+            
+            <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                <span>الكمية:</span>
+                <input type="number" id="qtyInput" value="1" min="1" style="width:60px; padding:6px; border-radius:6px; border:1px solid #ccc; text-align:center;">
+            </div>
+            
+            <div id="totalPrice" style="margin-top:15px; font-weight:bold; font-size:18px; color: var(--primary-brown);"></div>
+            
+            <button class="button-texture" id="orderBtn">
+                <span>Order Now</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const APIs = { rings:"https://script.google.com/macros/s/AKfycbyTEQPUUpI2QEqOll3nfn_m6OhBGU6ZZC2jGm_dkUBOvlHnCTS-4DW1l9t1ZGwt2J6E/exec", earrings:"https://script.google.com/macros/s/AKfycbyYKkbUolvQ4XAa9JypZVkkfqxZZsxdKcgZGHJAyNVDouEQ3C6Dul9YSecm8K4_wAqu/exec", necklaces:"https://script.google.com/macros/s/AKfycbzV5ulAIrv3rVZy7ZlvJV-m3fFcbZH4p_xnbNb443iYxKKnLO7jktm_ZWm1wXhzRzO3/exec", bracelets:"https://script.google.com/macros/s/AKfycbwlkhVCMVH4knCGrj7Cwkj8gCXMbD21zXTstIuntgUdnwxy-uNSVG0HUOQ6o3MdsKSLGw/exec", bags:"https://script.google.com/macros/s/AKfycbzearJTBoLvGtdiX8g9bCMr4cJi286kRKZ9H-q1fCCaxvjGcuw7bve5bKtjDXwMarUUkw/exec", leathers:"https://script.google.com/macros/s/AKfycbz8g00g6t7ZtrLHC_b4PSbSS1v8hzLac-no6ScPDt8J2QrZEIPXAeqqo2VPAijAH8_J/exec", bestsellers:"https://script.google.com/macros/s/AKfycbx8tKoTEs2TsjHge4Qqjj8ALjPnvMKDqqGABFubVcOSXVmlx34nbZ9flRosW20jG0W3/exec", beads:"https://script.google.com/macros/s/AKfycbydWz_6EAx3_sTndrvQgEP9CjOoVUzvRDI3vaqFOcGD2UKKDz3_o985zPhEF9wSH1GkTA/exec" };
+        const banners = { rings:"images/ring1.png", earrings:"images/e1.png", necklaces:"images/n1.png", bracelets:"images/br1.png", bags:"images/b1.png", leathers:"images/l1.png", bestsellers:"images/best1.png", beads:"images/be1.png" };
+
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get("cat") || "rings";
+        let currentProducts = [];
+
+        document.getElementById("categoryName").textContent = cat;
+        document.getElementById("navCategory").textContent = cat;
+        document.getElementById("categoryBanner").src = banners[cat] || banners.rings;
+
+        async function loadProducts() {
+
+    const cacheKey = "products_" + cat;
+
+    // لو في داتا مخزنة
+    const cached = localStorage.getItem(cacheKey);
+
+    if (cached) {
+        currentProducts = JSON.parse(cached);
+        renderProducts(currentProducts);
+        console.log("Loaded from cache ⚡");
+        return;
+    }
+
+    // لو مفيش كاش
+    try {
+        const res = await fetch(APIs[cat]);
+        currentProducts = await res.json();
+
+        // تخزين في المتصفح
+        localStorage.setItem(cacheKey, JSON.stringify(currentProducts));
+
+        renderProducts(currentProducts);
+        console.log("Loaded from API 🌐");
+
+    } catch (e) {
+        console.error(e);
+    }
+
+}
+
+        function renderProducts(products) {
+            const grid = document.getElementById("productsGrid");
+            grid.innerHTML = "";
+            products.forEach((p, i) => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.dataset.index = i;
+                card.innerHTML = `
+                    <div class="img-holder"><div class="wishlist-btn">♡</div><img src="${p.image}" loading="lazy"></div>
+                    <div class="card-info">
+                        <h3>${p.name}</h3>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span class="price">EGP ${p.price}</span>
+                        </div>
+                        <button class="view-btn">More Details</button>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById("productsGrid").addEventListener("click", e => {
+            const card = e.target.closest(".product-card");
+            if(card) openProduct(currentProducts[card.dataset.index]);
+        });
+
+        function openProduct(product) {
+            const modal = document.getElementById("productModal");
+            const qty = document.getElementById("qtyInput");
+            document.getElementById("modalImage").src = product.image;
+            document.getElementById("modalName").textContent = product.name;
+            document.getElementById("modalPrice").textContent = "EGP " + product.price;
+            document.getElementById("modalDesc").textContent = product.desc || "تصميم حصري بجودة متميزة.";
+            
+            const update = () => document.getElementById("totalPrice").textContent = "Total: EGP " + (product.price * qty.value);
+            qty.value = 1; update();
+            qty.oninput = update;
+            document.getElementById("orderBtn").onclick = () => window.location.href = `orders.html?name=${encodeURIComponent(product.name)}&price=${product.price}&qty=${qty.value}&total=${product.price * qty.value}`;
+            modal.style.display = "flex";
+        }
+
+        document.getElementById("productModal").onclick = e => { if(e.target.id === "productModal") e.target.style.display = "none"; };
+        loadProducts();
+    </script>
+</body>
+</html>
